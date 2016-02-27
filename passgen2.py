@@ -67,11 +67,8 @@ def randomPassword():
 def copyOption(element):
     copy = input("type 'y' to copy this password to the clipboard: ")
     if copy == 'y':
-        copyToClip(element)
-
-def copyToClip(element):
-    os.system("echo '%s' | pbcopy" % element)
-    print (element, "is in the clipboard")
+        os.system("echo '%s' | pbcopy" % element)
+        print (element, "is in the clipboard")
 
 def diceWare():
     '''
