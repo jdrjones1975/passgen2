@@ -8,12 +8,6 @@ ver = 0.02
 specChars = '!@#$%^&*()-=_+,.<>?/\| '
 charset = string.ascii_letters + string.digits + specChars
 
-def main():
-    introduction()
-    while True:
-        menu()
-    quit()
-
 def introduction():
     print('***************************************')
     print('* This is password generator ver', ver, '*')
@@ -124,5 +118,7 @@ def flatten(lst):
         else:
             yield elem
 
-main()
-quit()
+if __name__ == '__main__':
+    introduction()
+    while True:
+        menu()
