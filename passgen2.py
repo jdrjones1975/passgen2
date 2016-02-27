@@ -11,32 +11,6 @@ charset = string.ascii_letters + string.digits + specChars
 #TODO
 #add increaseentropy function option to diceWare
 
-def introduction():
-    print('***************************************')
-    print('* This is password generator ver', ver, '*')
-    print('*                                     *')
-    print('* Present functionality is limited    *')
-    print('* to psuedorandomness.                *')
-    print('* Future versions to be in a GUI.     *')
-    print('***************************************')
-
-def menu():
-    print()
-    print("1. Generate a random password from 1 to 64 characters.")
-    print("2. Generate a diceware password.")
-    print("3. Quit")
-    selection = input("     Please make a selection(1-4): ")
-    if selection == '1':
-        generated_pwd = randomPassword(ask_length())
-        copyOption(generated_pwd)
-    elif selection == '2':
-        generated_pwd = diceWare()
-        copyOption(generated_pwd)
-    elif selection == '3':
-        quit()
-    else:
-        print("Invalid choice")
-        return
 
 def ask_length():
     '''Ask user for password length, validate user input'''
@@ -113,6 +87,36 @@ def copyOption(element):
         print (element, "is in the clipboard")
 
 if __name__ == '__main__':
+    def introduction():
+        print('***************************************')
+        print('* This is password generator ver', ver, '*')
+        print('*                                     *')
+        print('* Present functionality is limited    *')
+        print('* to psuedorandomness.                *')
+        print('* Future versions to be in a GUI.     *')
+        print('***************************************')
+
+    def menu():
+        print()
+        print("1. Generate a random password from 1 to 64 characters.")
+        print("2. Generate a diceware password.")
+        print("3. About diceware password.")
+        print("3. Quit")
+        selection = input("     Please make a selection(1-4): ")
+        if selection == '1':
+            generated_pwd = randomPassword(ask_length())
+            copyOption(generated_pwd)
+        elif selection == '2':
+            generated_pwd = diceWare()
+            copyOption(generated_pwd)
+        elif selection == '3':
+            diceware_about()
+        elif selection == '4':
+            quit()
+        else:
+            print("Invalid choice")
+            return
+
     introduction()
     while True:
         menu()
