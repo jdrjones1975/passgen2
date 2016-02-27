@@ -1,13 +1,11 @@
 import random
 import os
+import string
 
 ver = 0.02
 
-lowerCase = 'abcdefghijklmnopqrstuvwxyz'
-upperCase = lowerCase.upper()
-digits = '1234567890'
 specChars = '!@#$%^&*()-=_+,.<>?/\| '
-charset = lowerCase + upperCase + digits + specChars
+charset = string.ascii_letters + string.digits + specChars
 
 def main():
     introduction()
