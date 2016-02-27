@@ -40,7 +40,6 @@ def menu():
         return
         
 def randomPassword():
-    length = 0
     password = ' '
     print("\nThis will generate a random password")
     try:
