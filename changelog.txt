@@ -1,0 +1,5 @@
+Diceware generator: 
+combines random password and psuedo-diceware password into one app.
+
+ver0.02 
+Initial github release

@@ -27,16 +27,13 @@ def menu():
     print()
     print("1. Generate a random password from 1 to 64 characters.")
     print("2. Generate a diceware password.")
-    print("3. Read the changelog.")
-    print("4. Quit")
+    print("3. Quit")
     selection = input("     Please make a selection(1-4): ")
     if selection == '1':
         randomPassword()
     elif selection == '2':
         diceWare()
     elif selection == '3':
-        changelog()
-    elif selection == '4':
         quit()
     else:
         print("Invalid choice")
@@ -127,9 +124,6 @@ def flatten(lst):
                 yield i
         else:
             yield elem
-
-def changelog():
-    print(ver, "combines random password and psuedo-diceware password into one app.")
 
 main()
 quit()
