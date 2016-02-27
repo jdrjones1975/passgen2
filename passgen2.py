@@ -104,6 +104,7 @@ if __name__ == '__main__':
             copyOption(generated_pwd)
         elif selection == '3':
             diceware_about()
+            input("Press any key to go back to menu")
         elif selection == '4':
             quit()
         else:
