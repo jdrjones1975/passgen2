@@ -45,20 +45,13 @@ def diceware_seq(ware_length, seq_length):
     '''
     return [dice_seq(seq_length) for _ in range(ware_length)]
 
-def diceWare():
+def diceWare(word_length):
     '''
-    Ask user for desired word length
-    Generate $length of diceroll sequence
+    Generate $length of diceroll sequences
     Generate password from given diceroll sequence
+    diceWare(word_length)
     return password
     '''
-    
-    try:
-        word_length = int(input("Input your desired number of words: "))
-    except ValueError:
-        print ("Invalid input, fallback to default length of 5")
-        word_length = 5
-
     SEQ_LENGTH = 5 # dicewaremaster only has index of 5 digits
 
     ware = {ware_seq : 0 for ware_seq in diceware_seq(word_length, SEQ_LENGTH)} # initializa a dictionary of indexes with value of 0
@@ -102,12 +95,12 @@ if __name__ == '__main__':
         print("2. Generate a diceware password.")
         print("3. About diceware password.")
         print("3. Quit")
-        selection = input("     Please make a selection(1-4): ")
+        selection = input("Please make a selection(1-4): ")
         if selection == '1':
             generated_pwd = randomPassword(ask_length())
             copyOption(generated_pwd)
         elif selection == '2':
-            generated_pwd = diceWare()
+            generated_pwd = diceWare(ask_length())
             copyOption(generated_pwd)
         elif selection == '3':
             diceware_about()
