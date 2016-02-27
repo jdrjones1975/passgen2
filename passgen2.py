@@ -8,6 +8,9 @@ ver = 0.02
 specChars = '!@#$%^&*()-=_+,.<>?/\| '
 charset = string.ascii_letters + string.digits + specChars
 
+#TODO
+#add increaseentropy function option to diceWare
+
 def introduction():
     print('***************************************')
     print('* This is password generator ver', ver, '*')
@@ -27,13 +30,13 @@ def menu():
         generated_pwd = randomPassword(ask_length())
         copyOption(generated_pwd)
     elif selection == '2':
-        diceWare()
+        generated_pwd = diceWare()
+        copyOption(generated_pwd)
     elif selection == '3':
         quit()
     else:
         print("Invalid choice")
         return
-        
 
 def ask_length():
     '''Ask user for password length, validate user input'''
@@ -54,71 +57,63 @@ def randomPassword(password_length):
     print('Password generated: {}'.format(password))
     return password
 
+
+def dice_seq(seq_length):
+    '''
+    Generate sequence of dice roll, returns int of seq_length
+    dice_seq(seq_length)
+    '''
+    return ''.join( [str(random.randint(1, 6)) for _ in range(seq_length)] )
+
+def diceware_seq(ware_length, seq_length):
+    '''
+    Generate diceware sequences, return a list of dice sequences
+    '''
+    return [dice_seq(seq_length) for _ in range(ware_length)]
+
+def diceWare():
+    '''
+    Ask user for desired word length
+    Generate $length of diceroll sequence
+    Generate password from given diceroll sequence
+    return password
+    '''
+    
+    try:
+        word_length = int(input("Input your desired number of words: "))
+    except ValueError:
+        print ("Invalid input, fallback to default length of 5")
+        word_length = 5
+
+    SEQ_LENGTH = 5 # dicewaremaster only has index of 5 digits
+
+    ware = {ware_seq : 0 for ware_seq in diceware_seq(word_length, SEQ_LENGTH)} # initializa a dictionary of indexes with value of 0
+
+    with open('./dicewaremaster.txt', 'r') as f: # open dicewaremaster file
+        for line in f.readlines():
+            index, word = line.split()
+            
+            if index in ware:
+                ware[index] = word
+
+    password = ' '.join( [val for val in ware.values()] )
+    print('Password generated: {}'.format(password))
+
+    return password
+
+def diceware_about():
+    print("Diceware™ is a method for picking passphrases that uses dice to select words at random from a special list called the Diceware Word List.")
+    print("Learn more about diceware at http://world.std.com/~reinhold/diceware.html")
+
 def copyOption(element):
+    '''Prompt user to confirm copy password to clipboard'''
     copy = input("type 'y' to copy this password to the clipboard: ")
     if copy == 'y':
         os.system("echo '%s' | pbcopy" % element) # This does not work on linux
         print (element, "is in the clipboard")
 
-def diceWare():
-    '''
-    Learn more about diceware at http://world.std.com/~reinhold/diceware.html
-    '''
-    
-    print()
-    print("Diceware™ is a method for picking passphrases that uses dice to select words at random from a special list called the Diceware Word List.")
-    print()
-    
-    dic = {} #creates empty dictionary for key/values from dicewaremaster.txt
-    length = 5 #begin with 5, can make this a var as input later to determine how many words returned as password
-    try:
-        length = int(input("Input your desired number of words: "))
-    except ValueError:
-        print ("ValueError, using default of 5")
-    password = [] #initialize an empty password / word holder
-    
-    f = open('dicewaremaster.txt', 'r') #opens dicewaremaster file
-    for l in f:
-        '''
-        writes diceware dictionary to dic
-        '''
-        k, v = l.split()
-        if k in dic:
-            dic[k].extend(v)
-        else:
-            dic[k] = [v]
-
-    f.close() #closes txt file
-
-    #initialize the five dice and roll them length times
-    for i in range(0,length):
-        ones = (random.randint(1,6))
-        tens = 10 * (random.randint(1,6))
-        huns = 100 * (random.randint(1,6))
-        thous = 1000 * (random.randint(1,6))
-        tenthous = 10000 * (random.randint(1,6))
-        rawRoll = tenthous + thous + huns + tens + ones
-        rawRoll = str(rawRoll)
-        password.append(dic[rawRoll])
-
-    flatPass = list(flatten(password))
-    password = ' '.join(flatPass)
-    print()
-    print(password)
-    print()
-    #increaseentropy function option here
-    copyOption(password)
-
-
-def flatten(lst):
-    for elem in lst:
-        if type(elem) in (tuple, list):
-            for i in flatten(elem):
-                yield i
-        else:
-            yield elem
-
 if __name__ == '__main__':
     introduction()
     while True:
         menu()
+
