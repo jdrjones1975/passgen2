@@ -10,8 +10,7 @@ charset = string.ascii_letters + string.digits + specChars
 
 def main():
     introduction()
-    running = True
-    while running:
+    while True:
         menu()
     quit()
 
