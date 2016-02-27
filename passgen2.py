@@ -24,7 +24,8 @@ def menu():
     print("3. Quit")
     selection = input("     Please make a selection(1-4): ")
     if selection == '1':
-        randomPassword()
+        generated_pwd = randomPassword(ask_length())
+        copyOption(generated_pwd)
     elif selection == '2':
         diceWare()
     elif selection == '3':
@@ -33,31 +34,30 @@ def menu():
         print("Invalid choice")
         return
         
-def randomPassword():
-    password = ' '
-    print("\nThis will generate a random password")
+
+def ask_length():
+    '''Ask user for password length, validate user input'''
     try:
         length = int(input("Input your desired password length (1-64): "))
     except ValueError:
-        print ("ValueError")
+        print("ValueError: Input should be integer")
 
-    if length >= 1 and length <= 64:
-        password = ''.join(random.choice(charset) for k in range(length))
-        print()
-        print(password)
-        print()
-        copyOption(password)
+    if length not in range(1, 65):
+        raise ValueError("Length should be between 1 to 64") # raise exception would break while loop
+        return None
+    
+    return length
 
-
-    else:
-        print("Error, returning to main menu.")
-        return
-
+def randomPassword(password_length):
+    '''Generate random password of length password_length from charset'''
+    password = ''.join((random.choice(charset) for _ in range(password_length)))
+    print('Password generated: {}'.format(password))
+    return password
 
 def copyOption(element):
     copy = input("type 'y' to copy this password to the clipboard: ")
     if copy == 'y':
-        os.system("echo '%s' | pbcopy" % element)
+        os.system("echo '%s' | pbcopy" % element) # This does not work on linux
         print (element, "is in the clipboard")
 
 def diceWare():
